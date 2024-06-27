@@ -1,0 +1,2 @@
+le mur est droit mais la muraille ne lest pas.
+Il faudrait regresser le mur et la muraille.
