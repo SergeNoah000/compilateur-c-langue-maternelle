@@ -1,0 +1,2 @@
+---> automate pour mur
+---> automate pour [abc]*

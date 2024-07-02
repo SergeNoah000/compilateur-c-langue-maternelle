@@ -11,7 +11,7 @@ NUMBER  {DIGIT}{DIGIT}
 %%
 
 {NUMBER}                { printf("<int:%s>", yytext); }
-[+*]                    { printf("<operateur:%s>", yytext); }
+[+*-]                    { printf("<operateur:%s>", yytext); }
 \n                      { /* ignore newlines */ }
 [ \t]                   { /* ignore whitespace */ }
 .                       { yyerror("parse error"); }

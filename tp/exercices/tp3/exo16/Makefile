@@ -1,0 +1,5 @@
+exo16: exo16.y exo16.lex
+	bison --defines=simple.h -v -o exo16.c exo16.y
+	flex -o exo16.yy.c exo16.lex
+	gcc exo16.yy.c exo16.c -o exo16 -lfl
+

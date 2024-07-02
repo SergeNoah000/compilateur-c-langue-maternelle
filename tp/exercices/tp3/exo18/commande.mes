@@ -1,0 +1,7 @@
+a=3;
+b=4+3*a;
+c=a*b;
+
+lachieeu b; 
+lachieeu c;
+

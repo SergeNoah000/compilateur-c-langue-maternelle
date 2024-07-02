@@ -1,0 +1,10 @@
+exo15: exo15.y exo15.lex
+	bison --defines=simple.h -v -o tp319.c tp319.y
+	flex -o tp317.yy.c tp317.lex
+	gcc tp317.yy.c tp319.c -o simple3 -lfl
+
+test: test.o simple3
+	ld -s -o test test.o -melf_i386 -I/lib/ld-linux.so.2 -lc
+
+test.o: test.asm
+	nasm -f elf -o test.o test.asm

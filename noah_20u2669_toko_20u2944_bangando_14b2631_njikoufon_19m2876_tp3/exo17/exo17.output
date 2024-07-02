@@ -1,0 +1,294 @@
+Grammar
+
+    0 $accept: input $end
+
+    1 input: %empty
+    2      | input line
+
+    3 line: '\n'
+    4     | stmt '\n'
+
+    5 stmt: exp
+    6     | VAR '=' exp
+    7     | PRINT VAR
+    8     | stmt ';'
+
+    9 exp: NUM
+   10    | VAR
+   11    | exp '+' exp
+   12    | exp '-' exp
+   13    | exp '*' exp
+   14    | exp '/' exp
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '\n' (10) 3 4
+    '*' (42) 13
+    '+' (43) 11
+    '-' (45) 12
+    '/' (47) 14
+    ';' (59) 8
+    '=' (61) 6
+    error (256)
+    NUM (258) 9
+    VAR (259) 6 7 10
+    PRINT (260) 7
+
+
+Nonterminals, with rules where they appear
+
+    $accept (13)
+        on left: 0
+    input (14)
+        on left: 1 2
+        on right: 0 2
+    line (15)
+        on left: 3 4
+        on right: 2
+    stmt (16)
+        on left: 5 6 7 8
+        on right: 4 8
+    exp (17)
+        on left: 9 10 11 12 13 14
+        on right: 5 6 11 12 13 14
+
+
+State 0
+
+    0 $accept: . input $end
+
+    $default  reduce using rule 1 (input)
+
+    input  go to state 1
+
+
+State 1
+
+    0 $accept: input . $end
+    2 input: input . line
+
+    $end   shift, and go to state 2
+    NUM    shift, and go to state 3
+    VAR    shift, and go to state 4
+    PRINT  shift, and go to state 5
+    '\n'   shift, and go to state 6
+
+    line  go to state 7
+    stmt  go to state 8
+    exp   go to state 9
+
+
+State 2
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+State 3
+
+    9 exp: NUM .
+
+    $default  reduce using rule 9 (exp)
+
+
+State 4
+
+    6 stmt: VAR . '=' exp
+   10 exp: VAR .
+
+    '='  shift, and go to state 10
+
+    $default  reduce using rule 10 (exp)
+
+
+State 5
+
+    7 stmt: PRINT . VAR
+
+    VAR  shift, and go to state 11
+
+
+State 6
+
+    3 line: '\n' .
+
+    $default  reduce using rule 3 (line)
+
+
+State 7
+
+    2 input: input line .
+
+    $default  reduce using rule 2 (input)
+
+
+State 8
+
+    4 line: stmt . '\n'
+    8 stmt: stmt . ';'
+
+    '\n'  shift, and go to state 12
+    ';'   shift, and go to state 13
+
+
+State 9
+
+    5 stmt: exp .
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+    '*'  shift, and go to state 16
+    '/'  shift, and go to state 17
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 10
+
+    6 stmt: VAR '=' . exp
+
+    NUM  shift, and go to state 3
+    VAR  shift, and go to state 18
+
+    exp  go to state 19
+
+
+State 11
+
+    7 stmt: PRINT VAR .
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 12
+
+    4 line: stmt '\n' .
+
+    $default  reduce using rule 4 (line)
+
+
+State 13
+
+    8 stmt: stmt ';' .
+
+    $default  reduce using rule 8 (stmt)
+
+
+State 14
+
+   11 exp: exp '+' . exp
+
+    NUM  shift, and go to state 3
+    VAR  shift, and go to state 18
+
+    exp  go to state 20
+
+
+State 15
+
+   12 exp: exp '-' . exp
+
+    NUM  shift, and go to state 3
+    VAR  shift, and go to state 18
+
+    exp  go to state 21
+
+
+State 16
+
+   13 exp: exp '*' . exp
+
+    NUM  shift, and go to state 3
+    VAR  shift, and go to state 18
+
+    exp  go to state 22
+
+
+State 17
+
+   14 exp: exp '/' . exp
+
+    NUM  shift, and go to state 3
+    VAR  shift, and go to state 18
+
+    exp  go to state 23
+
+
+State 18
+
+   10 exp: VAR .
+
+    $default  reduce using rule 10 (exp)
+
+
+State 19
+
+    6 stmt: VAR '=' exp .
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '+'  shift, and go to state 14
+    '-'  shift, and go to state 15
+    '*'  shift, and go to state 16
+    '/'  shift, and go to state 17
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 20
+
+   11 exp: exp . '+' exp
+   11    | exp '+' exp .
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '*'  shift, and go to state 16
+    '/'  shift, and go to state 17
+
+    $default  reduce using rule 11 (exp)
+
+
+State 21
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   12    | exp '-' exp .
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+
+    '*'  shift, and go to state 16
+    '/'  shift, and go to state 17
+
+    $default  reduce using rule 12 (exp)
+
+
+State 22
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   13    | exp '*' exp .
+   14    | exp . '/' exp
+
+    $default  reduce using rule 13 (exp)
+
+
+State 23
+
+   11 exp: exp . '+' exp
+   12    | exp . '-' exp
+   13    | exp . '*' exp
+   14    | exp . '/' exp
+   14    | exp '/' exp .
+
+    $default  reduce using rule 14 (exp)

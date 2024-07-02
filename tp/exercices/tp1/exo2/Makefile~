@@ -1,0 +1,6 @@
+all:exo1.c exo2.c
+
+exo1:exo1.c
+	gcc exo1.c -o exo1
+exo2:exo2.c
+	gcc exo2.c -o exo2

@@ -1,0 +1,789 @@
+Terminals unused in grammar
+
+   FSIN
+
+
+State 0 conflicts: 5 shift/reduce, 1 reduce/reduce
+State 8 conflicts: 5 shift/reduce, 2 reduce/reduce
+State 21 conflicts: 3 shift/reduce, 1 reduce/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: program_body
+
+    2 program_body: stat
+    3             | stat program_body
+
+    4 stat: bloc
+    5     | blocSi
+    6     | blocWhile
+
+    7 bloc: instr ';'
+    8     | instr ';' bloc
+
+    9 instr: /* empty */
+   10      | VARIABLE '=' E
+   11      | PRINT VARIABLE
+   12      | READ VARIABLE
+   13      | VARIABLE '=' cond
+
+   14 blocWhile: /* empty */
+   15          | WHILE etiquetWhile exp_bool LOOP blocIntWhile ENDWHILE
+
+   16 blocIntWhile: bloc
+   17             | blocSi
+   18             | blocSi blocIntWhile
+   19             | bloc blocIntWhile
+
+   20 etiquetWhile: /* empty */
+
+   21 LOOP: DO
+
+   22 exp_bool: cond
+
+   23 ENDWHILE: DONE
+
+   24 blocSi: SI cond alo bloc finSi
+   25       | SI cond alo bloc sino bloc finSi
+
+   26 finSi: FSI
+
+   27 alo: ALORS
+
+   28 sino: SINON
+
+   29 cond: /* empty */
+   30     | '(' F '=' F ')'
+   31     | '(' F '!' F ')'
+   32     | '(' F '<' F ')'
+   33     | '(' F '>' F ')'
+
+   34 E: T
+   35  | E '+' T
+
+   36 T: F
+   37  | T '*' F
+
+   38 F: INTEGER
+   39  | VARIABLE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 31
+'(' (40) 30 31 32 33
+')' (41) 30 31 32 33
+'*' (42) 37
+'+' (43) 35
+';' (59) 7 8
+'<' (60) 32
+'=' (61) 10 13 30
+'>' (62) 33
+error (256)
+INTEGER (258) 38
+PRINT (259) 11
+VARIABLE (260) 10 11 12 13 39
+SI (261) 24 25
+ALORS (262) 27
+SINON (263) 28
+FSI (264) 26
+FSIN (265)
+READ (266) 12
+WHILE (267) 15
+DONE (268) 23
+DO (269) 21
+
+
+Nonterminals, with rules where they appear
+
+$accept (24)
+    on left: 0
+Program (25)
+    on left: 1, on right: 0
+program_body (26)
+    on left: 2 3, on right: 1 3
+stat (27)
+    on left: 4 5 6, on right: 2 3
+bloc (28)
+    on left: 7 8, on right: 4 8 16 19 24 25
+instr (29)
+    on left: 9 10 11 12 13, on right: 7 8
+blocWhile (30)
+    on left: 14 15, on right: 6
+blocIntWhile (31)
+    on left: 16 17 18 19, on right: 15 18 19
+etiquetWhile (32)
+    on left: 20, on right: 15
+LOOP (33)
+    on left: 21, on right: 15
+exp_bool (34)
+    on left: 22, on right: 15
+ENDWHILE (35)
+    on left: 23, on right: 15
+blocSi (36)
+    on left: 24 25, on right: 5 17 18
+finSi (37)
+    on left: 26, on right: 24 25
+alo (38)
+    on left: 27, on right: 24 25
+sino (39)
+    on left: 28, on right: 25
+cond (40)
+    on left: 29 30 31 32 33, on right: 13 22 24 25
+E (41)
+    on left: 34 35, on right: 10 35
+T (42)
+    on left: 36 37, on right: 34 35 37
+F (43)
+    on left: 38 39, on right: 30 31 32 33 36 37
+
+
+state 0
+
+    0 $accept: . Program $end
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    SI        shift, and go to state 3
+    READ      shift, and go to state 4
+    WHILE     shift, and go to state 5
+
+    $end      reduce using rule 14 (blocWhile)
+    PRINT     [reduce using rule 14 (blocWhile)]
+    VARIABLE  [reduce using rule 14 (blocWhile)]
+    SI        [reduce using rule 14 (blocWhile)]
+    READ      [reduce using rule 14 (blocWhile)]
+    WHILE     [reduce using rule 14 (blocWhile)]
+    ';'       reduce using rule 9 (instr)
+    ';'       [reduce using rule 14 (blocWhile)]
+    $default  reduce using rule 9 (instr)
+
+    Program       go to state 6
+    program_body  go to state 7
+    stat          go to state 8
+    bloc          go to state 9
+    instr         go to state 10
+    blocWhile     go to state 11
+    blocSi        go to state 12
+
+
+state 1
+
+   11 instr: PRINT . VARIABLE
+
+    VARIABLE  shift, and go to state 13
+
+
+state 2
+
+   10 instr: VARIABLE . '=' E
+   13      | VARIABLE . '=' cond
+
+    '='  shift, and go to state 14
+
+
+state 3
+
+   24 blocSi: SI . cond alo bloc finSi
+   25       | SI . cond alo bloc sino bloc finSi
+
+    '('  shift, and go to state 15
+
+    $default  reduce using rule 29 (cond)
+
+    cond  go to state 16
+
+
+state 4
+
+   12 instr: READ . VARIABLE
+
+    VARIABLE  shift, and go to state 17
+
+
+state 5
+
+   15 blocWhile: WHILE . etiquetWhile exp_bool LOOP blocIntWhile ENDWHILE
+
+    $default  reduce using rule 20 (etiquetWhile)
+
+    etiquetWhile  go to state 18
+
+
+state 6
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 19
+
+
+state 7
+
+    1 Program: program_body .
+
+    $default  reduce using rule 1 (Program)
+
+
+state 8
+
+    2 program_body: stat .
+    3             | stat . program_body
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    SI        shift, and go to state 3
+    READ      shift, and go to state 4
+    WHILE     shift, and go to state 5
+
+    $end      reduce using rule 2 (program_body)
+    $end      [reduce using rule 14 (blocWhile)]
+    PRINT     [reduce using rule 14 (blocWhile)]
+    VARIABLE  [reduce using rule 14 (blocWhile)]
+    SI        [reduce using rule 14 (blocWhile)]
+    READ      [reduce using rule 14 (blocWhile)]
+    WHILE     [reduce using rule 14 (blocWhile)]
+    ';'       reduce using rule 9 (instr)
+    ';'       [reduce using rule 14 (blocWhile)]
+    $default  reduce using rule 2 (program_body)
+
+    program_body  go to state 20
+    stat          go to state 8
+    bloc          go to state 9
+    instr         go to state 10
+    blocWhile     go to state 11
+    blocSi        go to state 12
+
+
+state 9
+
+    4 stat: bloc .
+
+    $default  reduce using rule 4 (stat)
+
+
+state 10
+
+    7 bloc: instr . ';'
+    8     | instr . ';' bloc
+
+    ';'  shift, and go to state 21
+
+
+state 11
+
+    6 stat: blocWhile .
+
+    $default  reduce using rule 6 (stat)
+
+
+state 12
+
+    5 stat: blocSi .
+
+    $default  reduce using rule 5 (stat)
+
+
+state 13
+
+   11 instr: PRINT VARIABLE .
+
+    $default  reduce using rule 11 (instr)
+
+
+state 14
+
+   10 instr: VARIABLE '=' . E
+   13      | VARIABLE '=' . cond
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+    '('       shift, and go to state 15
+
+    $default  reduce using rule 29 (cond)
+
+    cond  go to state 24
+    E     go to state 25
+    T     go to state 26
+    F     go to state 27
+
+
+state 15
+
+   30 cond: '(' . F '=' F ')'
+   31     | '(' . F '!' F ')'
+   32     | '(' . F '<' F ')'
+   33     | '(' . F '>' F ')'
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 28
+
+
+state 16
+
+   24 blocSi: SI cond . alo bloc finSi
+   25       | SI cond . alo bloc sino bloc finSi
+
+    ALORS  shift, and go to state 29
+
+    alo  go to state 30
+
+
+state 17
+
+   12 instr: READ VARIABLE .
+
+    $default  reduce using rule 12 (instr)
+
+
+state 18
+
+   15 blocWhile: WHILE etiquetWhile . exp_bool LOOP blocIntWhile ENDWHILE
+
+    '('  shift, and go to state 15
+
+    $default  reduce using rule 29 (cond)
+
+    exp_bool  go to state 31
+    cond      go to state 32
+
+
+state 19
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+state 20
+
+    3 program_body: stat program_body .
+
+    $default  reduce using rule 3 (program_body)
+
+
+state 21
+
+    7 bloc: instr ';' .
+    8     | instr ';' . bloc
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    READ      shift, and go to state 4
+
+    PRINT     [reduce using rule 7 (bloc)]
+    VARIABLE  [reduce using rule 7 (bloc)]
+    READ      [reduce using rule 7 (bloc)]
+    ';'       reduce using rule 7 (bloc)
+    ';'       [reduce using rule 9 (instr)]
+    $default  reduce using rule 7 (bloc)
+
+    bloc   go to state 33
+    instr  go to state 10
+
+
+state 22
+
+   38 F: INTEGER .
+
+    $default  reduce using rule 38 (F)
+
+
+state 23
+
+   39 F: VARIABLE .
+
+    $default  reduce using rule 39 (F)
+
+
+state 24
+
+   13 instr: VARIABLE '=' cond .
+
+    $default  reduce using rule 13 (instr)
+
+
+state 25
+
+   10 instr: VARIABLE '=' E .
+   35 E: E . '+' T
+
+    '+'  shift, and go to state 34
+
+    $default  reduce using rule 10 (instr)
+
+
+state 26
+
+   34 E: T .
+   37 T: T . '*' F
+
+    '*'  shift, and go to state 35
+
+    $default  reduce using rule 34 (E)
+
+
+state 27
+
+   36 T: F .
+
+    $default  reduce using rule 36 (T)
+
+
+state 28
+
+   30 cond: '(' F . '=' F ')'
+   31     | '(' F . '!' F ')'
+   32     | '(' F . '<' F ')'
+   33     | '(' F . '>' F ')'
+
+    '='  shift, and go to state 36
+    '!'  shift, and go to state 37
+    '<'  shift, and go to state 38
+    '>'  shift, and go to state 39
+
+
+state 29
+
+   27 alo: ALORS .
+
+    $default  reduce using rule 27 (alo)
+
+
+state 30
+
+   24 blocSi: SI cond alo . bloc finSi
+   25       | SI cond alo . bloc sino bloc finSi
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    READ      shift, and go to state 4
+
+    $default  reduce using rule 9 (instr)
+
+    bloc   go to state 40
+    instr  go to state 10
+
+
+state 31
+
+   15 blocWhile: WHILE etiquetWhile exp_bool . LOOP blocIntWhile ENDWHILE
+
+    DO  shift, and go to state 41
+
+    LOOP  go to state 42
+
+
+state 32
+
+   22 exp_bool: cond .
+
+    $default  reduce using rule 22 (exp_bool)
+
+
+state 33
+
+    8 bloc: instr ';' bloc .
+
+    $default  reduce using rule 8 (bloc)
+
+
+state 34
+
+   35 E: E '+' . T
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    T  go to state 43
+    F  go to state 27
+
+
+state 35
+
+   37 T: T '*' . F
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 44
+
+
+state 36
+
+   30 cond: '(' F '=' . F ')'
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 45
+
+
+state 37
+
+   31 cond: '(' F '!' . F ')'
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 46
+
+
+state 38
+
+   32 cond: '(' F '<' . F ')'
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 47
+
+
+state 39
+
+   33 cond: '(' F '>' . F ')'
+
+    INTEGER   shift, and go to state 22
+    VARIABLE  shift, and go to state 23
+
+    F  go to state 48
+
+
+state 40
+
+   24 blocSi: SI cond alo bloc . finSi
+   25       | SI cond alo bloc . sino bloc finSi
+
+    SINON  shift, and go to state 49
+    FSI    shift, and go to state 50
+
+    finSi  go to state 51
+    sino   go to state 52
+
+
+state 41
+
+   21 LOOP: DO .
+
+    $default  reduce using rule 21 (LOOP)
+
+
+state 42
+
+   15 blocWhile: WHILE etiquetWhile exp_bool LOOP . blocIntWhile ENDWHILE
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    SI        shift, and go to state 3
+    READ      shift, and go to state 4
+
+    $default  reduce using rule 9 (instr)
+
+    bloc          go to state 53
+    instr         go to state 10
+    blocIntWhile  go to state 54
+    blocSi        go to state 55
+
+
+state 43
+
+   35 E: E '+' T .
+   37 T: T . '*' F
+
+    '*'  shift, and go to state 35
+
+    $default  reduce using rule 35 (E)
+
+
+state 44
+
+   37 T: T '*' F .
+
+    $default  reduce using rule 37 (T)
+
+
+state 45
+
+   30 cond: '(' F '=' F . ')'
+
+    ')'  shift, and go to state 56
+
+
+state 46
+
+   31 cond: '(' F '!' F . ')'
+
+    ')'  shift, and go to state 57
+
+
+state 47
+
+   32 cond: '(' F '<' F . ')'
+
+    ')'  shift, and go to state 58
+
+
+state 48
+
+   33 cond: '(' F '>' F . ')'
+
+    ')'  shift, and go to state 59
+
+
+state 49
+
+   28 sino: SINON .
+
+    $default  reduce using rule 28 (sino)
+
+
+state 50
+
+   26 finSi: FSI .
+
+    $default  reduce using rule 26 (finSi)
+
+
+state 51
+
+   24 blocSi: SI cond alo bloc finSi .
+
+    $default  reduce using rule 24 (blocSi)
+
+
+state 52
+
+   25 blocSi: SI cond alo bloc sino . bloc finSi
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    READ      shift, and go to state 4
+
+    $default  reduce using rule 9 (instr)
+
+    bloc   go to state 60
+    instr  go to state 10
+
+
+state 53
+
+   16 blocIntWhile: bloc .
+   19             | bloc . blocIntWhile
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    SI        shift, and go to state 3
+    READ      shift, and go to state 4
+
+    DONE      reduce using rule 16 (blocIntWhile)
+    $default  reduce using rule 9 (instr)
+
+    bloc          go to state 53
+    instr         go to state 10
+    blocIntWhile  go to state 61
+    blocSi        go to state 55
+
+
+state 54
+
+   15 blocWhile: WHILE etiquetWhile exp_bool LOOP blocIntWhile . ENDWHILE
+
+    DONE  shift, and go to state 62
+
+    ENDWHILE  go to state 63
+
+
+state 55
+
+   17 blocIntWhile: blocSi .
+   18             | blocSi . blocIntWhile
+
+    PRINT     shift, and go to state 1
+    VARIABLE  shift, and go to state 2
+    SI        shift, and go to state 3
+    READ      shift, and go to state 4
+
+    DONE      reduce using rule 17 (blocIntWhile)
+    $default  reduce using rule 9 (instr)
+
+    bloc          go to state 53
+    instr         go to state 10
+    blocIntWhile  go to state 64
+    blocSi        go to state 55
+
+
+state 56
+
+   30 cond: '(' F '=' F ')' .
+
+    $default  reduce using rule 30 (cond)
+
+
+state 57
+
+   31 cond: '(' F '!' F ')' .
+
+    $default  reduce using rule 31 (cond)
+
+
+state 58
+
+   32 cond: '(' F '<' F ')' .
+
+    $default  reduce using rule 32 (cond)
+
+
+state 59
+
+   33 cond: '(' F '>' F ')' .
+
+    $default  reduce using rule 33 (cond)
+
+
+state 60
+
+   25 blocSi: SI cond alo bloc sino bloc . finSi
+
+    FSI  shift, and go to state 50
+
+    finSi  go to state 65
+
+
+state 61
+
+   19 blocIntWhile: bloc blocIntWhile .
+
+    $default  reduce using rule 19 (blocIntWhile)
+
+
+state 62
+
+   23 ENDWHILE: DONE .
+
+    $default  reduce using rule 23 (ENDWHILE)
+
+
+state 63
+
+   15 blocWhile: WHILE etiquetWhile exp_bool LOOP blocIntWhile ENDWHILE .
+
+    $default  reduce using rule 15 (blocWhile)
+
+
+state 64
+
+   18 blocIntWhile: blocSi blocIntWhile .
+
+    $default  reduce using rule 18 (blocIntWhile)
+
+
+state 65
+
+   25 blocSi: SI cond alo bloc sino bloc finSi .
+
+    $default  reduce using rule 25 (blocSi)

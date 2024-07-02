@@ -1,0 +1,7 @@
+Reconnaissance dcadcb (voir la table dans le fichier tableGrammaireExo11.pdf)
+
+pile			Entrée				Action
+0			dcadcb$				s3
+0d3			 cadcb$				r3,goto 2
+0A2			 cadcb$				s4
+0A2c4			  adcb$				erreur

@@ -1,0 +1,12 @@
+
+a = 12;
+a = 12*12 ;
+
+c = 100;
+aPe (a==144) gue_e 
+   lachieeu c;
+tacPo_o 
+   lachieeu a;
+aami
+
+
