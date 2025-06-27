@@ -1,0 +1,7 @@
+a=3;
+b=4+3*a;
+c=a*b;
+
+print b; 
+print c;
+

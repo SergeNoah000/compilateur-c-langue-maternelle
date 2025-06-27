@@ -1,0 +1,7 @@
+
+leton b;
+
+te(i= 1; i < b; i = i + 1)
+LOOP
+    lepele i;
+ENDLOOP
